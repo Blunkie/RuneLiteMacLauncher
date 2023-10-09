@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,6 +28,7 @@ public class Main {
         } else {
             file = System.getProperty("user.home") + "\\AppData\\Local\\RuneLite\\config.json";
         }
+
         InputStream inputStream = new FileInputStream(file);
         JSONTokener tokener = new JSONTokener(inputStream);
         JSONObject object = new JSONObject(tokener);
@@ -39,5 +43,21 @@ public class Main {
         fileWriter.flush();
         fileWriter.close();
         fileOutputStream.close();
+
+        try {
+            String[] command = {
+                    "java",
+                    "-cp",
+                    "/Applications/RuneLite.app/Contents/Resources/EthanVannInstaller.jar:/Applications/RuneLite.app/Contents/Resources/RuneLite.jar",
+                    "ca.arnah.runelite.LauncherHijack"
+            };
+
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            Process process = processBuilder.start();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
